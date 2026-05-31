@@ -54,7 +54,7 @@ with tab1:
         unsafe_allow_html=True
     )
 
-    st.markdown("<div class='title'>💖 Happy Birthday Dear 💖</div>", unsafe_allow_html=True)
+    st.markdown("<div class='title'>💖 Happy Birthday  💖</div>", unsafe_allow_html=True)
     st.markdown("<div class='subtitle'>A special surprise is waiting for you ✨</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='card'>", unsafe_allow_html=True)
