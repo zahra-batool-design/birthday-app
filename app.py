@@ -60,10 +60,10 @@ with tab1:
     st.markdown("<div class='card'>", unsafe_allow_html=True)
 
     st.markdown("### 🎂 Wishes for you:")
-    st.markdown("✨ Happiness")
-    st.markdown("✨ Success")
-    st.markdown("✨ Love")
-    st.markdown("✨ Peace")
+st.markdown("✨ Happiness — May your life always be filled with smiles and beautiful moments.")
+st.markdown("✨ Success — May you achieve your goals and reach every dream you aim for.")
+st.markdown("✨ Love — May you be surrounded by caring people who truly value you.")
+st.markdown("✨ Peace — May your heart always stay calm, strong, and peaceful.")
 
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -133,7 +133,7 @@ with tab2:
         time.sleep(0.05)
 
 
-# ===================== LOVE LETTER =====================
+# =====================  LETTER =====================
 with tab3:
 
     st.markdown(
@@ -171,17 +171,16 @@ with tab3:
     st.markdown("""
     <div class='letter'>
 
-    Dear Special One, <br><br>
+    Dear Naeem G!, <br><br>
 
     I don’t even know how to perfectly express this feeling… but you mean a lot to me. 💖  
-    Slowly, unintentionally, you became someone very special in my heart.  
+Slowly, without even realizing it, you became someone very special in my life as a friend, someone I can truly trust and rely on.
 
-    I admire your smile, your presence, and the way you make everything feel better just by being there. ✨  
+I really admire your smile, your presence, and the way you always make everything feel better just by being there. ✨  
+You’re one of those rare friends who make life lighter, calmer, and more beautiful just by existing in it.
 
-    Maybe I never said it clearly, but I really like you… more than just a normal thought. ❤️  
-
-    This is not a demand or expectation… just a pure feeling from my heart.  
-
+Maybe I never said it clearly, but I truly value our friendship more than words can explain. ❤️  
+This is not anything beyond friendship… just a pure feeling of appreciation, care, and gratitude for having you in my life as a best friend.
     <br><br>
 
       
