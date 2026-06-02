@@ -192,274 +192,240 @@ with tab3:
 
 
 # ===================== MEMORIES =====================
+# ===================== MEMORIES =====================
 with tab4:
 
     import time
+    import os
+    import base64
 
     st.markdown("""
     <style>
+
     .title {
         text-align:center;
-        font-size:45px;
+        font-size:55px;
         color:#ff4d6d;
-        text-shadow:0px 0px 20px #ff4d6d;
+        text-shadow:0px 0px 25px #ff4d6d;
+        font-weight:bold;
     }
 
     .sub {
         text-align:center;
         color:white;
-        opacity:0.8;
+        opacity:0.9;
+        font-size:20px;
+        margin-bottom:20px;
     }
 
-    .box {
-        display:flex;
-        justify-content:center;
+    .memory-box {
+        background: rgba(255,255,255,0.05);
+        padding:25px;
+        border-radius:20px;
         margin-top:20px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<div class='title'>📸 Memories Universe</div>", unsafe_allow_html=True)
-    st.markdown("<div class='sub'>Smooth rotating memories ✨</div>", unsafe_allow_html=True)
-
-    images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"]
-
-    # 🎵 MUSIC
-    try:
-        audio = open("song.mp3", "rb")
-        st.audio(audio.read(), format="audio/mp3")
-    except:
-        st.warning("Add song.mp3 🎵")
-
-    placeholder = st.empty()
-
-    # ================= SMOOTH ROTATION =================
-    i = 0
-
-    # keeps running visually smooth (controlled loop)
-    for _ in range(20):
-
-        with placeholder.container():
-
-            st.markdown("<div class='box'>", unsafe_allow_html=True)
-
-            st.image(
-                images[i],
-                width=420,
-                caption=f"💖 Memory {i+1}"
-            )
-
-            st.markdown("</div>", unsafe_allow_html=True)
-
-        time.sleep(2.5)   # ⏳ SLOW & SMOOTH TRANSITION
-        i = (i + 1) % len(images)
-
-    st.success("💖 Memories loaded successfully ✨")
-
-    import streamlit as st
-
-    images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"]
-
-    st.markdown("""
-    <style>
-
-    /* 🌌 STAR BACKGROUND */
-    body {
-        overflow-x: hidden;
-    }
-
-    .stars {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background: black;
-        z-index: -1;
-    }
-
-    .stars:before {
-        content: "";
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background: transparent url("https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/stars.png") repeat;
-        animation: moveStars 120s linear infinite;
-        opacity: 0.4;
-    }
-
-    @keyframes moveStars {
-        from {transform: translateY(0px);}
-        to {transform: translateY(-1000px);}
-    }
-
-    /* 💖 TITLE */
-    .title {
-        text-align:center;
-        font-size:45px;
-        color:#ff4d6d;
-        text-shadow:0px 0px 20px #ff4d6d;
-    }
-
-    /* 🎡 INFINITE CAROUSEL */
-    .carousel {
-        display: flex;
-        gap: 20px;
-        width: max-content;
-        animation: scroll 18s linear infinite;
-    }
-
-    .carousel img {
-        width: 300px;
-        height: 300px;
-        border-radius: 20px;
-        box-shadow: 0px 0px 20px rgba(255,0,100,0.5);
-        transition: transform 0.3s;
-        cursor: pointer;
-    }
-
-    .carousel img:hover {
-        transform: scale(1.1);
-    }
-
-    .carousel-wrapper {
-        overflow: hidden;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    @keyframes scroll {
-        0% {transform: translateX(0);}
-        100% {transform: translateX(-50%);}
-    }
-
-    /* ✨ POLAROID */
-    .polaroid {
-        background:white;
-        padding:10px;
-        border-radius:10px;
-        box-shadow:0px 0px 20px rgba(0,0,0,0.3);
-        display:inline-block;
-        transform: rotate(-2deg);
-        margin:10px;
-    }
-
-    /* 🎆 FIREWORK CANVAS */
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 999;
+        box-shadow:0px 0px 25px rgba(255,0,100,0.25);
+        backdrop-filter: blur(10px);
     }
 
     </style>
-
-    <div class="stars"></div>
-
-    <div class="title">📸 Memories Universe PRO</div>
-
     """, unsafe_allow_html=True)
 
-    # 🎵 MUSIC
-    try:
-        audio = open("song.mp3", "rb")
-        st.audio(audio.read(), format="audio/mp3")
-    except:
-        st.warning("Add song.mp3 🎵")
+    # ================= TITLE =================
+    st.markdown(
+        "<div class='title'>📸 Memories Universe PRO</div>",
+        unsafe_allow_html=True
+    )
 
-    # ================= INFINITE CAROUSEL =================
-    st.markdown("""
-    <div class="carousel-wrapper">
-        <div class="carousel">
-            <img src="img1.jpg">
-            <img src="img2.jpg">
-            <img src="img3.jpg">
-            <img src="img4.jpg">
-
-            <!-- duplicate for infinite loop feel -->
-            <img src="img1.jpg">
-            <img src="img2.jpg">
-            <img src="img3.jpg">
-            <img src="img4.jpg">
+    st.markdown(
+        """
+        <div class='sub'>
+        ✨ Every picture tells a story, every memory holds a feeling 💖
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
-    st.markdown("---")
+    # ================= AUTOPLAY MUSIC =================
+    try:
+        with open("memories_song.mp3", "rb") as f:
+            audio_bytes = f.read()
 
-    # ================= POLAROID GALLERY =================
-    st.markdown("### ✨ Floating Memories")
+        audio_base64 = base64.b64encode(audio_bytes).decode()
 
-    cols = st.columns(2)
+        st.markdown(
+            f"""
+            <audio autoplay loop controls>
+                <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
+            </audio>
+            """,
+            unsafe_allow_html=True
+        )
 
-    for i in range(4):
-        with cols[i % 2]:
-            st.markdown(f"""
-            <div class="polaroid">
-                <img src="{images[i]}" width="160">
-                <p style="text-align:center;">💖 Memory {i+1}</p>
-            </div>
-            """, unsafe_allow_html=True)
+    except:
+        st.warning("🎵 Add memories_song.mp3 beside app.py")
 
-    st.markdown("---")
+    # ================= IMAGES =================
+    images = [
+        "img1.jpg",
+        "img2.jpg",
+        "img3.jpg",
+        "img4.jpg",
+        "img5.jpg",
+        "img6.jpg",
+        "img7.jpg",
+        "img8.jpg",
+        "img9.jpg",
+        "img10.jpg",
+        "img11.jpg",
+        "img12.jpg"
+    ]
 
-    # ================= CLICK POPUP VIEWER =================
-    st.markdown("### 🧠 Click Memory Viewer")
+    valid_images = [img for img in images if os.path.exists(img)]
 
-    selected = st.radio("Choose Memory", ["1", "2", "3", "4"])
+    if len(valid_images) == 0:
 
-    st.image(images[int(selected)-1], width=400)
+        st.error("❌ No images found.")
+        st.info("Add your photos beside app.py")
 
-    st.success("💖 Memory opened in focus mode ✨")
+    else:
 
-    # ================= FIREWORKS CANVAS =================
-    st.markdown("""
-    <canvas id="fireworks"></canvas>
+        # ================= SLIDESHOW =================
+        st.markdown("---")
+        st.markdown("## 🌟 Memories Slideshow")
 
-    <script>
-    const canvas = document.getElementById("fireworks");
-    const ctx = canvas.getContext("2d");
+        slideshow = st.empty()
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+        for i in range(len(valid_images)):
 
-    let particles = [];
+            with slideshow.container():
 
-    function createFirework() {
-        for (let i = 0; i < 50; i++) {
-            particles.push({
-                x: canvas.width/2,
-                y: canvas.height/2,
-                vx: (Math.random()-0.5)*8,
-                vy: (Math.random()-0.5)*8,
-                life: 100
-            });
-        }
-    }
+                st.image(
+                    valid_images[i],
+                    width=650,
+                    caption=f"💖 Memory {i+1}"
+                )
 
-    function animate() {
-        ctx.fillStyle = "rgba(0,0,0,0.1)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+            time.sleep(2)
 
-        particles.forEach((p, i) => {
-            p.x += p.vx;
-            p.y += p.vy;
-            p.life--;
+        st.success("✨ Memories Loaded Successfully")
 
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(p.x, p.y, 3, 3);
+        # ================= MEMORY COLLECTION =================
+        st.markdown("---")
+        st.markdown("## 💕 Memory Collection")
 
-            if(p.life <= 0) particles.splice(i,1);
-        });
+        memory_sections = [
+            ("📸 Childhood Memories", ["img1.jpg", "img2.jpg"]),
+            ("💕 Favorite Moments", ["img3.jpg", "img4.jpg"]),
+            ("🌸 Beautiful Smiles", ["img5.jpg", "img6.jpg"]),
+            ("✨ Special Days", ["img7.jpg", "img8.jpg"]),
+            ("🎂 Birthday Memories", ["img9.jpg", "img10.jpg"]),
+            ("💖 Forever Memories", ["img11.jpg", "img12.jpg"])
+        ]
 
-        requestAnimationFrame(animate);
-    }
+        for title, imgs in memory_sections:
 
-    createFirework();
-    animate();
+            st.markdown(f"### {title}")
 
-    setInterval(createFirework, 3000);
-    </script>
-    """, unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+
+            with col1:
+                if os.path.exists(imgs[0]):
+                    st.image(imgs[0], use_container_width=True)
+
+            with col2:
+                if os.path.exists(imgs[1]):
+                    st.image(imgs[1], use_container_width=True)
+
+        # ================= MEMORY VIEWER =================
+        st.markdown("---")
+        st.markdown("## 🧠 Memory Viewer")
+
+        selected = st.selectbox(
+            "Choose Your Favorite Memory 💖",
+            valid_images
+        )
+
+        st.image(
+            selected,
+            width=750,
+            caption="✨ Special Memory"
+        )
+
+        st.success("💖 Memory Opened Successfully")
+
+        # ================= MEMORY WALL =================
+        st.markdown("---")
+        st.markdown("## 🌹 Memory Wall")
+
+        cols = st.columns(3)
+
+        for i, img in enumerate(valid_images):
+
+            with cols[i % 3]:
+
+                st.image(
+                    img,
+                    caption=f"💖 Memory {i+1}",
+                    use_container_width=True
+                )
+
+        # ================= SPECIAL MESSAGE =================
+        st.markdown("---")
+
+        st.markdown("""
+        <div class="memory-box">
+
+        <h2 style="text-align:center;color:#ff4d6d;">
+        💖 A Journey of Memories 💖
+        </h2>
+
+        <p style="
+        text-align:center;
+        color:white;
+        font-size:19px;
+        line-height:1.9;
+        ">
+
+        Every picture here is more than just an image. ✨
+
+        <br><br>
+
+        It is a memory,
+        a smile,
+        a beautiful moment frozen in time.
+
+        <br><br>
+
+        Some memories make us laugh,
+        some make us emotional,
+        but all of them remind us how precious certain people are. 💕
+
+        <br><br>
+
+        Today is not just another day.
+
+        <br><br>
+
+        It is a celebration of your existence,
+        your smile,
+        and the happiness you bring into the lives of others. 🎂✨
+
+        <br><br>
+
+        Happy Birthday 💖
+
+        <br><br>
+
+        May every memory ahead be even more beautiful than the ones collected here.
+
+        </p>
+
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.balloons()
+
+        st.success("🎂✨ Happy Birthday! ✨🎂")
    # ===================== BIRTHDAY TAB =====================
 with tab5:
 
