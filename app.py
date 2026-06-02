@@ -307,7 +307,7 @@ with tab4:
             with cols[i % 3]:
                 st.image(img, caption=f"💖 Memory {i+1}")
 
-        # ================= MEMORY COLLECTION =================
+        # ================= MEMORY COLLECTION ================
         st.markdown("---")
         st.markdown("## 💕 Memory Collection")
 
