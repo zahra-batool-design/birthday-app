@@ -54,7 +54,7 @@ with tab1:
         unsafe_allow_html=True
     )
 
-    st.markdown("<div class='title'>💖 Happy Birthday  💖</div>", unsafe_allow_html=True)
+    st.markdown("<div class='title'>💖 Happy Birthday G 💖</div>", unsafe_allow_html=True)
     st.markdown("<div class='subtitle'>A special surprise is waiting for you ✨</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='card'>", unsafe_allow_html=True)
@@ -72,7 +72,7 @@ with tab1:
 with tab2:
 
     st.markdown(
-        "<h1 style='text-align:center;color:red;text-shadow:0px 0px 20px red;'>❤️ Happy Birthday Dear ❤️</h1>",
+        "<h1 style='text-align:center;color:red;text-shadow:0px 0px 20px red;'>❤️ Happy Birthday G ❤️</h1>",
         unsafe_allow_html=True
     )
 
@@ -166,7 +166,7 @@ with tab3:
         unsafe_allow_html=True
     )
 
-    st.markdown("<div class='letter-title'>💌 Love Letter</div>", unsafe_allow_html=True)
+    st.markdown("<div class='letter-title'>💌  Letter</div>", unsafe_allow_html=True)
 
     st.markdown("""
     <div class='letter'>
@@ -184,15 +184,13 @@ with tab3:
 
     <br><br>
 
-    And lastly…  
+      
     <b>your well wisher 💌</b>
 
     </div>
     """, unsafe_allow_html=True)
 
 
-# ===================== MEMORIES =====================
-# ===================== MEMORIES =====================
 # ===================== MEMORIES TAB =====================
 with tab4:
 
@@ -415,7 +413,7 @@ with tab5:
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("<div class='birthday-title'>🎉 Happy Birthday 🎉</div>", unsafe_allow_html=True)
+    st.markdown("<div class='birthday-title'>🎉 Happy Birthday G🎉</div>", unsafe_allow_html=True)
     st.markdown("<div class='sub'>Wishing you endless joy, love & success 💖</div>", unsafe_allow_html=True)
 
     # 🎈 balloons
