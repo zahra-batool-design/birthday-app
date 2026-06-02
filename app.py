@@ -193,11 +193,11 @@ with tab3:
 
 # ===================== MEMORIES =====================
 # ===================== MEMORIES =====================
+# ===================== MEMORIES TAB =====================
 with tab4:
 
-    import time
+    import streamlit as st
     import os
-    import base64
 
     st.markdown("""
     <style>
@@ -231,127 +231,73 @@ with tab4:
     """, unsafe_allow_html=True)
 
     # ================= TITLE =================
-    st.markdown(
-        "<div class='title'>📸 Memories Universe PRO</div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<div class='title'>📸 Memories Universe PRO</div>", unsafe_allow_html=True)
 
-    st.markdown(
-        """
-        <div class='sub'>
-        ✨ Every picture tells a story, every memory holds a feeling 💖
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <div class='sub'>
+    ✨ Every picture tells a story, every memory holds a feeling 💖
+    </div>
+    """, unsafe_allow_html=True)
 
-    # ================= AUTOPLAY MUSIC =================
+    # ================= BASE PATH (DEPLOYMENT SAFE) =================
+    BASE_DIR = os.path.dirname(__file__)
+
+    # ================= AUDIO =================
     try:
-        with open("memories_song.mp3", "rb") as f:
-            audio_bytes = f.read()
-
-        audio_base64 = base64.b64encode(audio_bytes).decode()
-
-        st.markdown(
-            f"""
-            <audio autoplay loop controls>
-                <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
-            </audio>
-            """,
-            unsafe_allow_html=True
-        )
-
+        audio_path = os.path.join(BASE_DIR, "memories_song.mp3")
+        st.audio(audio_path, format="audio/mp3")
     except:
         st.warning("🎵 Add memories_song.mp3 beside app.py")
 
     # ================= IMAGES =================
     images = [
-        "img1.jpg",
-        "img2.jpg",
-        "img3.jpg",
-        "img4.jpg",
-        "img5.jpg",
-        "img6.jpg",
-        "img7.jpg",
-        "img8.jpg",
-        "img9.jpg",
-        "img10.jpg",
-        "img11.jpg",
-        "img12.jpg"
+        "img1.jpg","img2.jpg","img3.jpg","img4.jpg",
+        "img5.jpg","img6.jpg","img7.jpg","img8.jpg",
+        "img9.jpg","img10.jpg","img11.jpg","img12.jpg"
     ]
 
-    valid_images = [img for img in images if os.path.exists(img)]
+    valid_images = [
+        os.path.join(BASE_DIR, img)
+        for img in images
+        if os.path.exists(os.path.join(BASE_DIR, img))
+    ]
 
     if len(valid_images) == 0:
-
-        st.error("❌ No images found.")
-        st.info("Add your photos beside app.py")
-
+        st.error("❌ No images found. Add images beside app.py")
     else:
 
-        # ================= SLIDESHOW =================
-        st.markdown("---")
+        # ================= SLIDESHOW (SAFE) =================
         st.markdown("## 🌟 Memories Slideshow")
 
-        slideshow = st.empty()
+        if "mem_index" not in st.session_state:
+            st.session_state.mem_index = 0
 
-        for i in range(len(valid_images)):
+        col1, col2, col3 = st.columns(3)
 
-            with slideshow.container():
+        with col1:
+            if st.button("⬅️ Previous"):
+                st.session_state.mem_index = (st.session_state.mem_index - 1) % len(valid_images)
 
-                st.image(
-                    valid_images[i],
-                    width=650,
-                    caption=f"💖 Memory {i+1}"
-                )
+        with col2:
+            st.markdown(f"<h4 style='text-align:center;'>💖 Memory {st.session_state.mem_index + 1}</h4>", unsafe_allow_html=True)
 
-            time.sleep(2)
+        with col3:
+            if st.button("Next ➡️"):
+                st.session_state.mem_index = (st.session_state.mem_index + 1) % len(valid_images)
 
-        st.success("✨ Memories Loaded Successfully")
-
-        # ================= MEMORY COLLECTION =================
-        st.markdown("---")
-        st.markdown("## 💕 Memory Collection")
-
-        memory_sections = [
-            ("📸 Childhood Memories", ["img1.jpg", "img2.jpg"]),
-            ("💕 Favorite Moments", ["img3.jpg", "img4.jpg"]),
-            ("🌸 Beautiful Smiles", ["img5.jpg", "img6.jpg"]),
-            ("✨ Special Days", ["img7.jpg", "img8.jpg"]),
-            ("🎂 Birthday Memories", ["img9.jpg", "img10.jpg"]),
-            ("💖 Forever Memories", ["img11.jpg", "img12.jpg"])
-        ]
-
-        for title, imgs in memory_sections:
-
-            st.markdown(f"### {title}")
-
-            col1, col2 = st.columns(2)
-
-            with col1:
-                if os.path.exists(imgs[0]):
-                    st.image(imgs[0], use_container_width=True)
-
-            with col2:
-                if os.path.exists(imgs[1]):
-                    st.image(imgs[1], use_container_width=True)
+        st.image(
+            valid_images[st.session_state.mem_index],
+            width=650,
+            caption=f"💖 Memory {st.session_state.mem_index + 1}"
+        )
 
         # ================= MEMORY VIEWER =================
         st.markdown("---")
         st.markdown("## 🧠 Memory Viewer")
 
-        selected = st.selectbox(
-            "Choose Your Favorite Memory 💖",
-            valid_images
-        )
+        selected = st.selectbox("Choose Your Favorite Memory 💖", valid_images)
 
-        st.image(
-            selected,
-            width=750,
-            caption="✨ Special Memory"
-        )
-
-        st.success("💖 Memory Opened Successfully")
+        st.image(selected, width=750)
 
         # ================= MEMORY WALL =================
         st.markdown("---")
@@ -360,14 +306,32 @@ with tab4:
         cols = st.columns(3)
 
         for i, img in enumerate(valid_images):
-
             with cols[i % 3]:
+                st.image(img, caption=f"💖 Memory {i+1}")
 
-                st.image(
-                    img,
-                    caption=f"💖 Memory {i+1}",
-                    use_container_width=True
-                )
+        # ================= MEMORY COLLECTION =================
+        st.markdown("---")
+        st.markdown("## 💕 Memory Collection")
+
+        sections = [
+            ("📸 Childhood Memories", 0, 2),
+            ("💕 Favorite Moments", 2, 4),
+            ("🌸 Beautiful Smiles", 4, 6),
+            ("✨ Special Days", 6, 8),
+            ("🎂 Birthday Memories", 8, 10),
+            ("💖 Forever Memories", 10, 12)
+        ]
+
+        for title, start, end in sections:
+            st.markdown(f"### {title}")
+
+            cols = st.columns(2)
+
+            for i, col in enumerate(cols):
+                idx = start + i
+                if idx < len(valid_images):
+                    with col:
+                        st.image(valid_images[idx])
 
         # ================= SPECIAL MESSAGE =================
         st.markdown("---")
@@ -379,44 +343,19 @@ with tab4:
         💖 A Journey of Memories 💖
         </h2>
 
-        <p style="
-        text-align:center;
-        color:white;
-        font-size:19px;
-        line-height:1.9;
-        ">
+        <p style="text-align:center;color:white;font-size:18px;line-height:1.8;">
 
-        Every picture here is more than just an image. ✨
+        Every picture is a frozen emotion ✨<br><br>
 
-        <br><br>
+        Some make us smile 😊<br>
+        Some make us emotional 💕<br>
+        But all remind us of beautiful people in our life 💖<br><br>
 
-        It is a memory,
-        a smile,
-        a beautiful moment frozen in time.
+        Today is a celebration of YOU 🎂✨<br><br>
 
-        <br><br>
+        Happy Birthday 💖<br><br>
 
-        Some memories make us laugh,
-        some make us emotional,
-        but all of them remind us how precious certain people are. 💕
-
-        <br><br>
-
-        Today is not just another day.
-
-        <br><br>
-
-        It is a celebration of your existence,
-        your smile,
-        and the happiness you bring into the lives of others. 🎂✨
-
-        <br><br>
-
-        Happy Birthday 💖
-
-        <br><br>
-
-        May every memory ahead be even more beautiful than the ones collected here.
+        May your life become even more beautiful than these memories 🌸
 
         </p>
 
@@ -424,7 +363,6 @@ with tab4:
         """, unsafe_allow_html=True)
 
         st.balloons()
-
         st.success("🎂✨ Happy Birthday! ✨🎂")
    # ===================== BIRTHDAY TAB =====================
 with tab5:
